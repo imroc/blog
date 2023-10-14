@@ -13,14 +13,14 @@ tags:
 
 本文将给出一个可运行的程序示例：输入一个 GitHub 用户名，展示用户的简短介绍，包含名字、网站地址以及该用户下的最火开源项目与 star 数量，期间涉及的函数与 API 调用链路追踪信息均上报至 Jaeger，进行可视化展示。
 
+<!--truncate-->
+
 主要包含以下特点：
 
 * 内置一个基于 req 封装的 GitHub SDK。
 * SDK 中利用 req 的 `RequestMiddleware` 与 `ResponseMiddleware`，统一处理 API 异常，对接 API 的实现函数无需关心错误处理。
 * SDK 支持传入 OpenTelemetry 的 Tracer 来开启链路追踪，利用 req 的 Client 中间件能力，在请求前创建 trace span，并记录请求与响应的详细信息到 span 中(URL、Method、请求头、请求体、响应状态码、响应头、响应体等)，在响应结束后自动终止 span。
 * 在调用 SDK 的上层函数也使用 trace，层层传递，在 Jaeger UI 上可查看完整且非常详细的调用链路详情。
-
-<!--truncate-->
 
 ## 初始化项目
 
